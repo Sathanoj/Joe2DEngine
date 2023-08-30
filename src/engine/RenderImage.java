@@ -1,6 +1,5 @@
 package engine;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,19 +7,22 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class RenderImage {
-	BufferedImage image = null;
-	GamePanel gp;
-	public RenderImage(GamePanel gp) {
-		this.gp = gp;
+	private BufferedImage image = null;
+	
+	
+	public RenderImage() {
+		
 	}
-	public void draw(Graphics g2) {
+	public BufferedImage loadImage(String path) {
 		try {
-			this.image = ImageIO.read(new File("/walk_01.png"));
-			g2.drawImage(image, 100, 100, 26, 59, null);
+			return ImageIO.read(new File(path));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 	}
-
+	public BufferedImage getImage(String path) {
+		image  = loadImage(path);
+		return image;
+	}
 }
