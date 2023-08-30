@@ -3,6 +3,7 @@ package application;
 import javax.swing.JFrame;
 
 import engine.GamePanel;
+import game.Game;
 
 public class Program {
 
@@ -12,7 +13,7 @@ public class Program {
 		window.setResizable(false);
 		window.setTitle("engine 0.0.1");
 		
-		GamePanel game = new GamePanel();
+		GamePanel game = new GamePanel(new Game());
 		window.add(game);
 		
 		window.pack();

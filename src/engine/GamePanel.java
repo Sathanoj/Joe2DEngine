@@ -7,9 +7,6 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import entity.Boneco;
-import entity.Player;
-
 public class GamePanel extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
@@ -25,19 +22,18 @@ public class GamePanel extends JPanel implements Runnable{
 	int playerX, playerY;
 	private final int fps = 60;
 	
-	Thread gameThread;
-	Player jogador;
-	Boneco boneco;
+	private AbstractGame AG;
+	private Thread gameThread;
+
 	
-	public GamePanel() {
+	public GamePanel(AbstractGame AG) {
+		this.AG = AG;
 		this.setPreferredSize(new Dimension(screeWidth, screeHeight));
 		this.setBackground(Color.cyan);
 		this.setDoubleBuffered(true);
 	}
 	public void startGame() {
 		gameThread = new Thread(this);
-		jogador = new Player(this);
-		boneco = new Boneco(this);
 		gameThread.start();
 	}
 	@Override
@@ -58,7 +54,8 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			if(delta >= 1) {
 				//Update: update information
-				update();
+				AG.update(this);
+				
 				//Draw; draw the screen
 				repaint();
 				delta --;
@@ -73,16 +70,11 @@ public class GamePanel extends JPanel implements Runnable{
 		}
 	}
 	public void update() {
-		jogador.update();
-		boneco.update();
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
 		Graphics2D g2 = (Graphics2D)g;
-
-		jogador.draw(g2);
-		boneco.draw(g2);
+		AG.draw(g2);
 		g2.dispose();
 	}
 	public int getTileSize() {
