@@ -1,42 +1,32 @@
 package game;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 
 import engine.AbstractGame;
 import engine.GamePanel;
-import engine.RenderImage;
+import game.obj.Ball;
+import game.obj.Player1;
 
 public class Game extends AbstractGame{
-
+	private Ball ball;
+	private Player1 palete;
 	
-//	private GamePanel gp;
-	private RenderImage tile;
-	private BufferedImage image;
-	private int x = 100, y = 0;
 	public Game() {
-//		this.gp = gp;
-		tile = new RenderImage();
+		ball = new Ball();
+		palete = new Player1();
 		carregaTtiles();
-		
 	}
 	public void carregaTtiles() {
 		//from res folder this the correct way "res/tile05.png"
-		image = tile.getImage("res/tile05.png");
 	}
 	@Override
 	public void update(GamePanel gp) {
-		y ++;
-		if(y == gp.getScreeHeight()) {
-			y =- gp.getTileSize();
-		}
+		ball.update(gp);
+		palete.update(gp);
 	}
-
 	@Override
-	public void draw(Graphics g2) {
-		g2.drawImage(image, x, y, image.getWidth(), image.getHeight(), null);
-		
+	public void draw(Graphics2D g2) {
+		ball.draw(g2);
+		palete.draw(g2);
 	}
-
-
 }

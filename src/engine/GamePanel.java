@@ -7,30 +7,33 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import engine.tileFactory.Tile;
+
 public class GamePanel extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
-	final int originalTileSize = 16;
-	private final int scale = 3;
-	
-	private final int tileSize = originalTileSize * scale;
-	final int maxScreenCol = 16;
-	final int maxScreenRow = 12;
-	private final int screeWidth = tileSize * maxScreenCol;
-	private final int screeHeight = tileSize * maxScreenRow;
-	
-	int playerX, playerY;
+	private AbstractGame AG;
+	private Input keyboard;
+	private Thread gameThread;
+	private Tile tl;
+
+	private int screeWidth;
+	private int screeHeight;
 	private final int fps = 60;
 	
-	private AbstractGame AG;
-	private Thread gameThread;
-
 	
 	public GamePanel(AbstractGame AG) {
 		this.AG = AG;
+		tl = new Tile();
+		keyboard = new Input(this);
+		screeWidth = tl.getTileSize() * tl.getMaxScreenCol();
+		screeHeight = tl.getTileSize() * tl.getMaxScreenRow();
+		
 		this.setPreferredSize(new Dimension(screeWidth, screeHeight));
 		this.setBackground(Color.cyan);
 		this.setDoubleBuffered(true);
+		this.setFocusable(true);
+		this.addKeyListener(keyboard);
 	}
 	public void startGame() {
 		gameThread = new Thread(this);
@@ -60,7 +63,6 @@ public class GamePanel extends JPanel implements Runnable{
 				repaint();
 				delta --;
 				drawCount++;
-				
 			}
 			if(timer >= 1000000000) {
 				System.out.println("quadros: " + drawCount);
@@ -69,26 +71,16 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 		}
 	}
-	public void update() {
-	}
+//	public void update() {
+//	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		AG.draw(g2);
 		g2.dispose();
 	}
-	public int getTileSize() {
-		return tileSize;
-	}
-	public int getScreeWidth() {
-		return screeWidth;
-	}
-	public int getScreeHeight() {
-		return screeHeight;
-	}
-
-	public int getScale() {
-		return scale;
+	public Input getKeyboard() {
+		return keyboard;
 	}
 }
 
