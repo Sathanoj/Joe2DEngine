@@ -19,15 +19,21 @@ public class Player1 {
 	}
 	public void startPosition() {
 		x = 0;
-		y = 250;
+		y = 576 / 2;
 	}
 	public void update(GamePanel gp) {
-		
+//		System.out.println(gp.getWidth() + " " + gp.getHeight());
 		if(gp.getKeyboard().iskeyPressed(KeyEvent.VK_DOWN)) {
-			y+= speed;
+			y += speed;
+			if(y >= gp.getHeight() - palete.getHeight()) {
+				y = gp.getHeight() - palete.getHeight();
+			}
 		}
 		if(gp.getKeyboard().iskeyPressed(KeyEvent.VK_UP)) {
 			y-= speed;
+			if(y <= 0) {
+				y = 0;
+			}
 		}
 	}
 	public void draw(Graphics2D g2) {

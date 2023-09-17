@@ -6,11 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Input implements KeyListener {
-	private GamePanel gp;
     private Map<Integer, Boolean> keyPressed = new HashMap<>();
 
     public Input(GamePanel gp) {
-    	this.gp = gp;
     	for (int i = 0; i < 256; i++) {
     		keyPressed.put(i, false);
     	}

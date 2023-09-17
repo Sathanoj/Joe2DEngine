@@ -10,7 +10,6 @@ public class Ball {
 	private int y;
 	
 	public Ball() {
-		
 		y = 0;
 	}
 	public void update(GamePanel gp) {
@@ -20,10 +19,9 @@ public class Ball {
 			y = 0;
 		}
 	}
-	
 	public void draw(Graphics2D g2) {
 		g2.setColor(Color.PINK);
 		g2.fillOval(x, y, 30, 30);
 	}
-
+ 
 }
